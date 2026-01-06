@@ -1,0 +1,71 @@
+<!-- BACK TEMPLATE: Word Card v2 -->
+<div class="card-back">
+    <div class="card-container" id="cardContainer">
+
+        <!-- Header: Word + IPA + Part of Speech -->
+        <div class="word-header">
+            <div class="word">{{Word}}</div>
+            <div class="word-meta">
+                {{#IPA}}<span class="phonetic">/{{IPA}}/</span>{{/IPA}}
+                {{#PartOfSpeech}}<span class="pos">{{PartOfSpeech}}</span>{{/PartOfSpeech}}
+            </div>
+        </div>
+
+        <!-- Image (if available) -->
+        {{#image}}
+        <div class="image-container">
+            {{image}}
+        </div>
+        {{/image}}
+
+        <!-- Meaning (main definition) -->
+        <div class="meaning-section">
+            <span class="section-label">Meaning:</span>
+            <span class="meaning-text">{{Meaning}}</span>
+        </div>
+
+        <!-- Example Sentence -->
+        {{#ExampleSentence}}
+        <div class="example-section">
+            <span class="section-label">Example:</span>
+            <span class="example-text" id="exampleSentence">{{ExampleSentence}}</span>
+        </div>
+        {{/ExampleSentence}}
+
+        <!-- Collocations -->
+        {{#collocations pattern}}
+        <div class="section-row">
+            <span class="section-label">Collocation:</span>
+            <span class="section-value">{{collocations pattern}}</span>
+        </div>
+        {{/collocations pattern}}
+
+        <!-- Notes -->
+        {{#Notes}}
+        <div class="notes-section">
+            <span class="notes-text">{{Notes}}</span>
+        </div>
+        {{/Notes}}
+
+        <!-- Audio Button -->
+        {{#Audio}}
+        <div class="buttons-row">
+            <div class="audio-btn">
+                {{Audio}}
+            </div>
+        </div>
+        {{/Audio}}
+
+        <!-- Tags -->
+        {{#Tags}}
+        <div class="tags-row">
+            <span class="tags-label">Tags:</span>
+            <span class="tags-container" id="tagsContainer">{{Tags}}</span>
+        </div>
+        {{/Tags}}
+
+    </div>
+</div>
+
+<!-- Hidden fields for JS -->
+<div id="wordValue" style="display:none;">{{Word}}</div>

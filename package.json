@@ -1,0 +1,19 @@
+{
+  "name": "anki-languages-card",
+  "version": "1.0.0",
+  "description": "Modern Anki card templates for language learning",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js",
+    "build:word": "node build.js word",
+    "build:all": "node build.js --all"
+  },
+  "keywords": [
+    "anki",
+    "flashcards",
+    "language-learning",
+    "spaced-repetition"
+  ],
+  "author": "",
+  "license": "MIT"
+}

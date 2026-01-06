@@ -1,0 +1,37 @@
+<!-- FRONT TEMPLATE: Word Card v3 -->
+<div class="card-front">
+    <div class="card-container">
+
+        <!-- Header: Word + IPA + Part of Speech -->
+        <div class="word-header">
+            <div class="word">{{Word}}</div>
+            <div class="word-meta">
+                {{#IPA}}<span class="phonetic">/{{IPA}}/</span>{{/IPA}}
+                {{#PartOfSpeech}}<span class="pos">{{PartOfSpeech}}</span>{{/PartOfSpeech}}
+            </div>
+        </div>
+
+        <!-- Image (if available) -->
+        {{#image}}
+        <div class="image-container">
+            {{image}}
+        </div>
+        {{/image}}
+
+        <!-- Blank space for meaning (user will think of it) -->
+        <div class="meaning-placeholder">
+            <span class="placeholder-text">?</span>
+        </div>
+
+        <!-- Example Sentence (if available) -->
+        {{#ExampleSentence}}
+        <div class="example-section">
+            <span class="example-text" id="exampleFront">{{ExampleSentence}}</span>
+        </div>
+        {{/ExampleSentence}}
+
+    </div>
+</div>
+
+<!-- Hidden fields for JS -->
+<div id="wordValue" style="display:none;">{{Word}}</div>
