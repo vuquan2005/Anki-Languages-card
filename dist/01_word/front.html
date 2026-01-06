@@ -64,64 +64,44 @@ function applyHighlight(exampleSelector, word) {
 
 /**
  * Normalize and apply color to PartOfSpeech element
- * Converts all formats to: Noun, Verb, Adj, Adv, etc.
- * For nouns: adds [U] or [C] if countable/uncountable specified
+ * Uses regex patterns to match POS variations with flexible whitespace handling
  */
 function applyPosColor() {
-  const posElements = document.querySelectorAll('.pos');
+  const el = document.querySelector('.pos');
+  if (!el) return;
   
-  // Map to normalize POS
-  const posNormalize = {
-    // Noun variations
-    'noun': { display: 'Noun', css: 'pos-noun' },
-    'n': { display: 'Noun', css: 'pos-noun' },
-    'n.': { display: 'Noun', css: 'pos-noun' },
-    // Countable noun
-    'noun [c]': { display: 'Noun [C]', css: 'pos-noun' },
-    'n [c]': { display: 'Noun [C]', css: 'pos-noun' },
-    'n. [c]': { display: 'Noun [C]', css: 'pos-noun' },
-    'countable': { display: 'Noun [C]', css: 'pos-noun' },
-    'c': { display: 'Noun [C]', css: 'pos-noun' },
-    // Uncountable noun
-    'noun [u]': { display: 'Noun [U]', css: 'pos-noun' },
-    'n [u]': { display: 'Noun [U]', css: 'pos-noun' },
-    'n. [u]': { display: 'Noun [U]', css: 'pos-noun' },
-    'uncountable': { display: 'Noun [U]', css: 'pos-noun' },
-    'u': { display: 'Noun [U]', css: 'pos-noun' },
-    // Verb
-    'verb': { display: 'Verb', css: 'pos-verb' },
-    'v': { display: 'Verb', css: 'pos-verb' },
-    'v.': { display: 'Verb', css: 'pos-verb' },
-    // Adjective
-    'adjective': { display: 'Adj', css: 'pos-adj' },
-    'adj': { display: 'Adj', css: 'pos-adj' },
-    'adj.': { display: 'Adj', css: 'pos-adj' },
-    // Adverb
-    'adverb': { display: 'Adv', css: 'pos-adv' },
-    'adv': { display: 'Adv', css: 'pos-adv' },
-    'adv.': { display: 'Adv', css: 'pos-adv' },
-    // Preposition
-    'preposition': { display: 'Prep', css: 'pos-prep' },
-    'prep': { display: 'Prep', css: 'pos-prep' },
-    'prep.': { display: 'Prep', css: 'pos-prep' },
-    // Conjunction
-    'conjunction': { display: 'Conj', css: 'pos-conj' },
-    'conj': { display: 'Conj', css: 'pos-conj' },
-    'conj.': { display: 'Conj', css: 'pos-conj' },
-    // Pronoun
-    'pronoun': { display: 'Pron', css: 'pos-pron' },
-    'pron': { display: 'Pron', css: 'pos-pron' },
-    'pron.': { display: 'Pron', css: 'pos-pron' }
-  };
+  const pos = el.textContent.trim();
   
-  posElements.forEach(function(el) {
-    const pos = el.textContent.toLowerCase().trim();
-    const normalized = posNormalize[pos];
-    if (normalized) {
-      el.textContent = normalized.display;
-      el.classList.add(normalized.css);
+  // POS patterns: [regex, display, cssClass]
+  // ^$ ensures exact match, \s* in middle allows flexible spacing
+  const posPatterns = [
+    // Countable noun: noun [c], n[c], countable, c
+    [/^(?:(?:noun|n\.?)\s*\[c\]|countable|c)$/i, 'Noun [C]', 'pos-noun'],
+    // Uncountable noun: noun [u], n[u], uncountable, u
+    [/^(?:(?:noun|n\.?)\s*\[u\]|uncountable|u)$/i, 'Noun [U]', 'pos-noun'],
+    // Basic noun: noun, n, n.
+    [/^(?:noun|n\.?)$/i, 'Noun', 'pos-noun'],
+    // Verb: verb, v, v.
+    [/^(?:verb|v\.?)$/i, 'Verb', 'pos-verb'],
+    // Adjective: adjective, adj, adj.
+    [/^(?:adjective|adj\.?)$/i, 'Adj', 'pos-adj'],
+    // Adverb: adverb, adv, adv.
+    [/^(?:adverb|adv\.?)$/i, 'Adv', 'pos-adv'],
+    // Preposition: preposition, prep, prep.
+    [/^(?:preposition|prep\.?)$/i, 'Prep', 'pos-prep'],
+    // Conjunction: conjunction, conj, conj.
+    [/^(?:conjunction|conj\.?)$/i, 'Conj', 'pos-conj'],
+    // Pronoun: pronoun, pron, pron.
+    [/^(?:pronoun|pron\.?)$/i, 'Pron', 'pos-pron']
+  ];
+  
+  for (var i = 0; i < posPatterns.length; i++) {
+    if (posPatterns[i][0].test(pos)) {
+      el.textContent = posPatterns[i][1];
+      el.classList.add(posPatterns[i][2]);
+      break;
     }
-  });
+  }
 }
 
 /**

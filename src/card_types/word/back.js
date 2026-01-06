@@ -1,5 +1,5 @@
 /**
- * Back Card Logic v2
+ * Back Card Logic
  */
 
 onCardReady(function() {
