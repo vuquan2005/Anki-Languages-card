@@ -2,11 +2,22 @@
 <div class="card-front">
     <div class="card-container">
 
-        <!-- Header: Word + IPA + Part of Speech -->
+        <!-- Audio Button (Top Right) -->
+        {{#Audio}}
+        <div class="audio-top-right">
+            {{Audio}}
+        </div>
+        {{/Audio}}
+
+        <!-- Header: Word + Dictionary Link + IPA + Part of Speech -->
         <div class="word-header">
-            <div class="word">{{Word}}</div>
+            <div class="word-row">
+                <span class="word">{{Word}}</span>
+                <a href="https://dictionary.cambridge.org/dictionary/english/{{Word}}" class="dict-link"
+                    title="Open Cambridge Dictionary">📖</a>
+            </div>
             <div class="word-meta">
-                {{#IPA}}<span class="phonetic">/{{IPA}}/</span>{{/IPA}}
+                {{#IPA}}<span class="phonetic" id="ipaFront">{{IPA}}</span>{{/IPA}}
                 {{#PartOfSpeech}}<span class="pos">{{PartOfSpeech}}</span>{{/PartOfSpeech}}
             </div>
         </div>

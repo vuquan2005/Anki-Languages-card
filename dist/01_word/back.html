@@ -2,11 +2,22 @@
 <div class="card-back">
     <div class="card-container" id="cardContainer">
 
-        <!-- Header: Word + IPA + Part of Speech -->
+        <!-- Audio Button (Top Right) -->
+        {{#Audio}}
+        <div class="audio-top-right">
+            {{Audio}}
+        </div>
+        {{/Audio}}
+
+        <!-- Header: Word + Dictionary Link + IPA + Part of Speech -->
         <div class="word-header">
-            <div class="word">{{Word}}</div>
+            <div class="word-row">
+                <span class="word">{{Word}}</span>
+                <a href="https://dictionary.cambridge.org/dictionary/english/{{Word}}" class="dict-link"
+                    title="Open Cambridge Dictionary">📖</a>
+            </div>
             <div class="word-meta">
-                {{#IPA}}<span class="phonetic">/{{IPA}}/</span>{{/IPA}}
+                {{#IPA}}<span class="phonetic" id="ipaBack">{{IPA}}</span>{{/IPA}}
                 {{#PartOfSpeech}}<span class="pos">{{PartOfSpeech}}</span>{{/PartOfSpeech}}
             </div>
         </div>
@@ -27,7 +38,11 @@
         <!-- Example Sentence -->
         {{#ExampleSentence}}
         <div class="example-section">
-            <span class="section-label">Example:</span>
+            <div class="example-header">
+                <span class="section-label">Example:</span>
+                <a href="https://translate.google.com/?sl=en&tl=vi&text={{ExampleSentence}}" class="translate-link"
+                    title="Google Translate">🌐</a>
+            </div>
             <span class="example-text" id="exampleSentence">{{ExampleSentence}}</span>
         </div>
         {{/ExampleSentence}}
@@ -46,16 +61,6 @@
             <span class="notes-text">{{Notes}}</span>
         </div>
         {{/Notes}}
-
-        <!-- Audio Button -->
-        {{#Audio}}
-        <div class="buttons-row">
-            <div class="audio-btn">
-                {{Audio}}
-            </div>
-        </div>
-        {{/Audio}}
-
         <!-- Tags -->
         {{#Tags}}
         <div class="tags-row">
@@ -71,122 +76,142 @@
 <div id="wordValue" style="display:none;">{{Word}}</div>
 
 <script>
-    // === Utils ===
-    /**
-     * Anki Card Utilities
-     */
+// === Utils ===
+/**
+ * Anki Card Utilities
+ */
 
-    /**
-     * Highlight a word within text (case-insensitive)
-     */
-    function highlightWord(text, word) {
-        if (!text || !word) return text;
-        const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const regex = new RegExp(`(${escapedWord})`, 'gi');
-        return text.replace(regex, '<span class="highlight">$1</span>');
+/**
+ * Highlight a word within text (case-insensitive)
+ */
+function highlightWord(text, word) {
+    if (!text || !word) return text;
+    const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(${escapedWord})`, 'gi');
+    return text.replace(regex, '<span class="highlight">$1</span>');
+}
+
+/**
+ * Apply highlight to example sentence element
+ */
+function applyHighlight(exampleSelector, word) {
+    const exampleEl = document.querySelector(exampleSelector);
+    if (exampleEl && word) {
+        exampleEl.innerHTML = highlightWord(exampleEl.textContent, word.trim());
     }
+}
 
-    /**
-     * Apply highlight to example sentence element
-     */
-    function applyHighlight(exampleSelector, word) {
-        const exampleEl = document.querySelector(exampleSelector);
-        if (exampleEl && word) {
-            exampleEl.innerHTML = highlightWord(exampleEl.textContent, word.trim());
+/**
+ * Normalize and apply color to PartOfSpeech element
+ * Uses regex patterns to match POS variations with flexible whitespace handling
+ */
+function applyPosColor() {
+    const el = document.querySelector('.pos');
+    if (!el) return;
+
+    const pos = el.textContent.trim();
+
+    // POS patterns: [regex, display, cssClass]
+    // ^$ ensures exact match, \s* in middle allows flexible spacing
+    const posPatterns = [
+        // Countable noun: noun [c], n[c], countable, c
+        [/^(?:(?:noun|n\.?)\s*\[c\]|countable|c)$/i, 'Noun [C]', 'pos-noun'],
+        // Uncountable noun: noun [u], n[u], uncountable, u
+        [/^(?:(?:noun|n\.?)\s*\[u\]|uncountable|u)$/i, 'Noun [U]', 'pos-noun'],
+        // Basic noun: noun, n, n.
+        [/^(?:noun|n\.?)$/i, 'Noun', 'pos-noun'],
+        // Verb: verb, v, v.
+        [/^(?:verb|v\.?)$/i, 'Verb', 'pos-verb'],
+        // Adjective: adjective, adj, adj.
+        [/^(?:adjective|adj\.?)$/i, 'Adj', 'pos-adj'],
+        // Adverb: adverb, adv, adv.
+        [/^(?:adverb|adv\.?)$/i, 'Adv', 'pos-adv'],
+        // Preposition: preposition, prep, prep.
+        [/^(?:preposition|prep\.?)$/i, 'Prep', 'pos-prep'],
+        // Conjunction: conjunction, conj, conj.
+        [/^(?:conjunction|conj\.?)$/i, 'Conj', 'pos-conj'],
+        // Pronoun: pronoun, pron, pron.
+        [/^(?:pronoun|pron\.?)$/i, 'Pron', 'pos-pron']
+    ];
+
+    for (var i = 0; i < posPatterns.length; i++) {
+        if (posPatterns[i][0].test(pos)) {
+            el.textContent = posPatterns[i][1];
+            el.classList.add(posPatterns[i][2]);
+            break;
         }
     }
+}
 
-    /**
-     * Normalize and apply color to PartOfSpeech element
-     * Uses regex patterns to match POS variations with flexible whitespace handling
-     */
-    function applyPosColor() {
-        const el = document.querySelector('.pos');
-        if (!el) return;
+/**
+ * Get the text content of a hidden field element
+ */
+function getFieldValue(selector) {
+    const el = document.querySelector(selector);
+    return el ? el.textContent.trim() : '';
+}
 
-        const pos = el.textContent.trim();
-
-        // POS patterns: [regex, display, cssClass]
-        // ^$ ensures exact match, \s* in middle allows flexible spacing
-        const posPatterns = [
-            // Countable noun: noun [c], n[c], countable, c
-            [/^(?:(?:noun|n\.?)\s*\[c\]|countable|c)$/i, 'Noun [C]', 'pos-noun'],
-            // Uncountable noun: noun [u], n[u], uncountable, u
-            [/^(?:(?:noun|n\.?)\s*\[u\]|uncountable|u)$/i, 'Noun [U]', 'pos-noun'],
-            // Basic noun: noun, n, n.
-            [/^(?:noun|n\.?)$/i, 'Noun', 'pos-noun'],
-            // Verb: verb, v, v.
-            [/^(?:verb|v\.?)$/i, 'Verb', 'pos-verb'],
-            // Adjective: adjective, adj, adj.
-            [/^(?:adjective|adj\.?)$/i, 'Adj', 'pos-adj'],
-            // Adverb: adverb, adv, adv.
-            [/^(?:adverb|adv\.?)$/i, 'Adv', 'pos-adv'],
-            // Preposition: preposition, prep, prep.
-            [/^(?:preposition|prep\.?)$/i, 'Prep', 'pos-prep'],
-            // Conjunction: conjunction, conj, conj.
-            [/^(?:conjunction|conj\.?)$/i, 'Conj', 'pos-conj'],
-            // Pronoun: pronoun, pron, pron.
-            [/^(?:pronoun|pron\.?)$/i, 'Pron', 'pos-pron']
-        ];
-
-        for (var i = 0; i < posPatterns.length; i++) {
-            if (posPatterns[i][0].test(pos)) {
-                el.textContent = posPatterns[i][1];
-                el.classList.add(posPatterns[i][2]);
-                break;
-            }
-        }
+/**
+ * Initialize card when DOM is ready
+ */
+function onCardReady(callback) {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', callback);
+    } else {
+        callback();
     }
+}
 
-    /**
-     * Get the text content of a hidden field element
-     */
-    function getFieldValue(selector) {
-        const el = document.querySelector(selector);
-        return el ? el.textContent.trim() : '';
+/**
+ * Normalize IPA by removing extra leading/trailing slashes
+ * User input: "/həˈloʊ/" or "həˈloʊ" or "//həˈloʊ//" → display: "/həˈloʊ/"
+ */
+function normalizeIPA(selector) {
+    var el = document.querySelector(selector);
+    if (!el) return;
+
+    var text = el.textContent.trim();
+    // Remove all leading and trailing slashes
+    var ipa = text.replace(/^\/+|\/+$/g, '');
+    // Only update if there's content
+    if (ipa) {
+        el.textContent = '/' + ipa + '/';
     }
+}
 
-    /**
-     * Initialize card when DOM is ready
-     */
-    function onCardReady(callback) {
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', callback);
-        } else {
-            callback();
-        }
+
+// === Back Logic ===
+/**
+ * Back Card Logic
+ */
+
+onCardReady(function() {
+  var word = getFieldValue('#wordValue');
+  
+  // 1. Apply color to PartOfSpeech
+  applyPosColor();
+  
+  // 2. Normalize IPA (remove extra slashes)
+  normalizeIPA('#ipaBack');
+  
+  // 3. Highlight the word in example sentence
+  if (word) {
+    applyHighlight('#exampleSentence', word);
+  }
+  
+  // 4. Parse and display tags as individual badges
+  var tagsContainer = document.getElementById('tagsContainer');
+  if (tagsContainer) {
+    var tagsText = tagsContainer.textContent.trim();
+    if (tagsText) {
+      var tags = tagsText.split(/\s+/).filter(function(tag) {
+        return tag.length > 0;
+      });
+      tagsContainer.innerHTML = tags.map(function(tag) {
+        return '<span class="tag">' + tag + '</span>';
+      }).join('');
     }
-
-
-    // === Back Logic ===
-    /**
-     * Back Card Logic
-     */
-
-    onCardReady(function () {
-        const word = getFieldValue('#wordValue');
-
-        // 1. Apply color to PartOfSpeech
-        applyPosColor();
-
-        // 2. Highlight the word in example sentence
-        if (word) {
-            applyHighlight('#exampleSentence', word);
-        }
-
-        // 3. Parse and display tags as individual badges
-        const tagsContainer = document.getElementById('tagsContainer');
-        if (tagsContainer) {
-            const tagsText = tagsContainer.textContent.trim();
-            if (tagsText) {
-                const tags = tagsText.split(/\s+/).filter(function (tag) {
-                    return tag.length > 0;
-                });
-                tagsContainer.innerHTML = tags.map(function (tag) {
-                    return '<span class="tag">' + tag + '</span>';
-                }).join('');
-            }
-        }
-    });
+  }
+});
 
 </script>

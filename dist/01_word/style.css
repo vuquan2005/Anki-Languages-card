@@ -6,352 +6,531 @@
 
 /* ===== CSS VARIABLES ===== */
 :root {
-  /* Typography */
-  --font-primary: 'Inter', 'Segoe UI', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'Roboto Mono', 'SF Mono', 'Consolas', monospace;
-  
-  /* Unified Font Sizes */
-  --text-xs: 0.75rem;    /* 12px - tags, tips */
-  --text-sm: 0.875rem;   /* 14px - labels, notes */
-  --text-base: 1rem;     /* 16px - body text */
-  --text-lg: 1.125rem;   /* 18px - meaning, examples */
-  --text-xl: 1.5rem;     /* 24px - phonetic */
-  --text-2xl: 2.25rem;   /* 36px - word */
-  
-  /* Spacing */
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
-  
-  /* Border Radius */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-full: 9999px;
-  
-  /* ===== LIGHT MODE COLORS ===== */
-  --bg-primary: #FAFAFA;
-  --bg-secondary: #F5F5F5;
-  --bg-tertiary: #EEEEEE;
-  --bg-card: #FFFFFF;
-  
-  --text-primary: #212121;
-  --text-secondary: #616161;
-  --text-muted: #9E9E9E;
-  
-  --border-color: #E0E0E0;
-  
-  --accent-primary: #26A69A;
-  --accent-secondary: #00897B;
-  
-  /* Part of Speech Colors - Shared */
-  --pos-noun: #1E88E5;
-  --pos-verb: #E53935;
-  --pos-adj: #FB8C00;
-  --pos-adv: #8E24AA;
-  --pos-prep: #D81B60;
-  --pos-conj: #00ACC1;
-  --pos-pron: #5E35B1;
-  --pos-default: #757575;
+    /* Typography */
+    --font-primary: 'Inter', 'Segoe UI', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Roboto Mono', 'SF Mono', 'Consolas', monospace;
+
+    /* Unified Font Sizes */
+    --text-xs: 0.75rem;
+    /* 12px - tags, tips */
+    --text-sm: 0.875rem;
+    /* 14px - labels, notes */
+    --text-base: 1rem;
+    /* 16px - body text */
+    --text-lg: 1.125rem;
+    /* 18px - meaning, examples */
+    --text-xl: 1.5rem;
+    /* 24px - phonetic */
+    --text-2xl: 2.25rem;
+    /* 36px - word */
+
+    /* Spacing */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-full: 9999px;
+
+    /* ===== LIGHT MODE COLORS ===== */
+    --bg-primary: #FAFAFA;
+    --bg-secondary: #F5F5F5;
+    --bg-tertiary: #EEEEEE;
+    --bg-card: #FFFFFF;
+
+    --text-primary: #212121;
+    --text-secondary: #616161;
+    --text-muted: #9E9E9E;
+
+    --border-color: #E0E0E0;
+
+    --accent-primary: #26A69A;
+    --accent-secondary: #00897B;
+
+    /* Part of Speech Colors - Shared */
+    --pos-noun: #1E88E5;
+    --pos-verb: #E53935;
+    --pos-adj: #FB8C00;
+    --pos-adv: #8E24AA;
+    --pos-prep: #D81B60;
+    --pos-conj: #00ACC1;
+    --pos-pron: #5E35B1;
+    --pos-default: #757575;
 }
 
 /* ===== DARK MODE (Dark Gray) ===== */
-.nightMode, .night_mode {
-  --bg-primary: #1E1E1E;
-  --bg-secondary: #252526;
-  --bg-tertiary: #333333;
-  --bg-card: #2D2D2D;
-  
-  --text-primary: #E0E0E0;
-  --text-secondary: #B0B0B0;
-  --text-muted: #808080;
-  
-  --border-color: #404040;
-  
-  --accent-primary: #4DB6AC;
-  --accent-secondary: #26A69A;
+.nightMode,
+.night_mode {
+    --bg-primary: #1E1E1E;
+    --bg-secondary: #252526;
+    --bg-tertiary: #333333;
+    --bg-card: #2D2D2D;
+
+    --text-primary: #E0E0E0;
+    --text-secondary: #B0B0B0;
+    --text-muted: #808080;
+
+    --border-color: #404040;
+
+    --accent-primary: #4DB6AC;
+    --accent-secondary: #26A69A;
 }
 
 /* ===== BASE STYLES ===== */
 .card {
-  font-family: var(--font-primary);
-  font-size: var(--text-base);
-  line-height: 1.6;
-  color: var(--text-primary);
-  background-color: var(--bg-primary);
-  text-align: left;
-  padding: var(--space-lg);
-  min-height: 100vh;
-  box-sizing: border-box;
+    font-family: var(--font-primary);
+    font-size: var(--text-base);
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    text-align: left;
+    padding: var(--space-lg);
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 /* ===== CARD CONTAINER ===== */
 .card-container {
-  width: 100%;
-  max-width: 600px;
-  background: var(--bg-card);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xl);
-  margin: 0 auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 600px;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    margin: 0 auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .nightMode .card-container,
 .night_mode .card-container {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* ===== WORD HEADER ===== */
 .word-header {
-  margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-lg);
 }
 
 .word {
-  font-size: var(--text-2xl);
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: var(--space-xs);
-  line-height: 1.2;
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+    line-height: 1.2;
 }
 
 .word-meta {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
 }
 
 .phonetic {
-  font-family: var(--font-mono);
-  font-size: var(--text-base);
-  color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-base);
+    color: var(--text-muted);
 }
 
 .pos {
-  font-size: var(--text-sm);
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: var(--radius-sm);
-  background: var(--bg-tertiary);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-tertiary);
 }
 
 /* Part of Speech Colors */
-.pos.pos-noun { color: var(--pos-noun); }
-.pos.pos-verb { color: var(--pos-verb); }
-.pos.pos-adj { color: var(--pos-adj); }
-.pos.pos-adv { color: var(--pos-adv); }
-.pos.pos-prep { color: var(--pos-prep); }
-.pos.pos-conj { color: var(--pos-conj); }
-.pos.pos-pron { color: var(--pos-pron); }
+.pos.pos-noun {
+    color: var(--pos-noun);
+}
+
+.pos.pos-verb {
+    color: var(--pos-verb);
+}
+
+.pos.pos-adj {
+    color: var(--pos-adj);
+}
+
+.pos.pos-adv {
+    color: var(--pos-adv);
+}
+
+.pos.pos-prep {
+    color: var(--pos-prep);
+}
+
+.pos.pos-conj {
+    color: var(--pos-conj);
+}
+
+.pos.pos-pron {
+    color: var(--pos-pron);
+}
 
 /* ===== IMAGE ===== */
 .image-container {
-  margin: var(--space-lg) 0;
-  text-align: center;
+    margin: var(--space-lg) 0;
+    text-align: center;
 }
 
 .image-container img {
-  max-width: 100%;
-  max-height: 280px;
-  object-fit: contain;
-  border-radius: var(--radius-md);
+    max-width: 100%;
+    max-height: 280px;
+    object-fit: contain;
+    border-radius: var(--radius-md);
 }
 
 /* ===== PROMPT BOX (Front) ===== */
 .prompt-box {
-  background: var(--bg-secondary);
-  border-left: 3px solid var(--accent-primary);
-  padding: var(--space-md) var(--space-lg);
-  border-radius: var(--radius-md);
-  margin: var(--space-xl) 0 var(--space-md) 0;
+    background: var(--bg-secondary);
+    border-left: 3px solid var(--accent-primary);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-md);
+    margin: var(--space-xl) 0 var(--space-md) 0;
 }
 
 .prompt-text {
-  font-size: var(--text-lg);
-  font-weight: 500;
-  color: var(--text-primary);
-  margin: 0;
+    font-size: var(--text-lg);
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0;
 }
 
 .tip-text {
-  font-size: var(--text-xs);
-  color: var(--accent-primary);
-  margin-top: var(--space-sm);
+    font-size: var(--text-xs);
+    color: var(--accent-primary);
+    margin-top: var(--space-sm);
 }
 
 /* ===== MEANING PLACEHOLDER (Front) ===== */
 .meaning-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 60px;
-  background: var(--bg-secondary);
-  border: 2px dashed var(--border-color);
-  border-radius: var(--radius-md);
-  margin: var(--space-lg) 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
+    background: var(--bg-secondary);
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius-md);
+    margin: var(--space-lg) 0;
 }
 
 .placeholder-text {
-  font-size: var(--text-2xl);
-  color: var(--text-muted);
-  font-weight: 300;
+    font-size: var(--text-2xl);
+    color: var(--text-muted);
+    font-weight: 300;
 }
 
 /* ===== SECTIONS ===== */
 .section-label {
-  font-size: var(--text-sm);
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-right: var(--space-sm);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-right: var(--space-sm);
 }
 
 /* ===== MEANING SECTION ===== */
 .meaning-section {
-  margin: var(--space-lg) 0;
-  padding: var(--space-md);
-  background: var(--bg-secondary);
-  border-radius: var(--radius-md);
+    margin: var(--space-lg) 0;
+    padding: var(--space-md);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
 }
 
 .meaning-text {
-  font-size: var(--text-lg);
-  color: var(--text-primary);
+    font-size: var(--text-lg);
+    color: var(--text-primary);
 }
 
 /* ===== EXAMPLE SECTION ===== */
 .example-section {
-  margin: var(--space-md) 0;
-  padding: var(--space-md);
-  background: var(--bg-tertiary);
-  border-left: 3px solid var(--accent-primary);
-  border-radius: var(--radius-md);
+    margin: var(--space-md) 0;
+    padding: var(--space-md);
+    background: var(--bg-tertiary);
+    border-left: 3px solid var(--accent-primary);
+    border-radius: var(--radius-md);
 }
 
 .example-text {
-  font-size: var(--text-base);
-  color: var(--text-secondary);
-  font-style: italic;
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    font-style: italic;
 }
 
 .highlight {
-  background: rgba(38, 166, 154, 0.15);
-  color: var(--accent-primary);
-  font-weight: 600;
-  font-style: normal;
-  padding: 0 3px;
-  border-radius: var(--radius-sm);
+    background: rgba(38, 166, 154, 0.15);
+    color: var(--accent-primary);
+    font-weight: 600;
+    font-style: normal;
+    padding: 0 3px;
+    border-radius: var(--radius-sm);
 }
 
 /* ===== SECTION ROW (Collocation) ===== */
 .section-row {
-  margin: var(--space-md) 0;
-  font-size: var(--text-base);
+    margin: var(--space-md) 0;
+    font-size: var(--text-base);
 }
 
 .section-value {
-  color: var(--text-secondary);
+    color: var(--text-secondary);
 }
 
 /* ===== NOTES SECTION ===== */
 .notes-section {
-  margin: var(--space-md) 0;
-  padding: var(--space-md);
-  background: var(--bg-secondary);
-  border-radius: var(--radius-md);
-  border: 1px dashed var(--border-color);
+    margin: var(--space-md) 0;
+    padding: var(--space-md);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--border-color);
 }
 
 .notes-text {
-  font-size: var(--text-base);
-  color: var(--text-secondary);
+    font-size: var(--text-base);
+    color: var(--text-secondary);
 }
 
 .notes-text::before {
-  content: '📝 ';
+    content: '📝 ';
 }
 
 /* ===== AUDIO BUTTON ===== */
 .buttons-row {
-  margin: var(--space-lg) 0;
+    margin: var(--space-lg) 0;
 }
 
 .audio-btn {
-  display: inline-block;
-  background: var(--bg-tertiary);
-  border-radius: var(--radius-full);
-  padding: var(--space-sm) var(--space-lg);
+    display: inline-block;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-full);
+    padding: var(--space-sm) var(--space-lg);
 }
 
 .audio-btn .replay-button {
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-  color: var(--text-primary);
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-primary);
 }
 
 .audio-btn .replay-button svg {
-  width: 20px;
-  height: 20px;
+    width: 20px;
+    height: 20px;
 }
 
 .audio-btn .replay-button svg circle {
-  fill: transparent;
+    fill: transparent;
 }
 
 .audio-btn .replay-button svg path {
-  fill: currentColor;
+    fill: currentColor;
 }
 
 /* ===== TAGS ===== */
 .tags-row {
-  margin-top: var(--space-lg);
-  font-size: var(--text-sm);
+    margin-top: var(--space-lg);
+    font-size: var(--text-sm);
 }
 
 .tags-label {
-  font-weight: 700;
-  color: var(--text-muted);
-  margin-right: var(--space-sm);
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-right: var(--space-sm);
 }
 
 .tags-container {
-  display: inline;
+    display: inline;
 }
 
 .tag {
-  display: inline-block;
-  padding: 2px 8px;
-  background: var(--accent-primary);
-  color: white;
-  border-radius: var(--radius-sm);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  margin: 2px;
+    display: inline-block;
+    padding: 2px 8px;
+    background: var(--accent-primary);
+    color: white;
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    margin: 2px;
 }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 480px) {
-  :root {
-    --text-2xl: 1.75rem;
-    --text-xl: 1.25rem;
-  }
-  
-  .card {
-    padding: var(--space-md);
-  }
-  
-  .card-container {
-    padding: var(--space-lg);
-  }
+    :root {
+        --text-2xl: 1.75rem;
+        --text-xl: 1.25rem;
+    }
+
+    .card {
+        padding: var(--space-md);
+    }
+
+    .card-container {
+        padding: var(--space-lg);
+    }
 }
 
 /* ===== UTILITIES ===== */
-.hidden { display: none !important; }
-
+.hidden {
+    display: none !important;
+}
 
 /* ===== CARD-SPECIFIC STYLES ===== */
-/* Word Card - No additional overrides needed */
+/* Word Card - Custom Styles */
+
+/* ===== AUDIO TOP RIGHT ===== */
+.card-container {
+    position: relative;
+}
+
+.audio-top-right {
+    position: absolute;
+    top: var(--space-lg);
+    right: var(--space-lg);
+    z-index: 10;
+}
+
+.audio-top-right .replay-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--accent-primary);
+    border-radius: var(--radius-full);
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(38, 166, 154, 0.3);
+    transition: all 0.2s ease;
+}
+
+.audio-top-right .replay-button:hover {
+    background: var(--accent-secondary);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(38, 166, 154, 0.4);
+}
+
+.audio-top-right .replay-button svg {
+    width: 18px;
+    height: 18px;
+}
+
+.audio-top-right .replay-button svg circle {
+    fill: transparent;
+}
+
+.audio-top-right .replay-button svg path {
+    fill: currentColor;
+}
+
+/* ===== WORD ROW (Word + Dictionary Icon) ===== */
+.word-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.word-header {
+    padding-right: 50px;
+}
+
+/* ===== DICTIONARY LINK ===== */
+.dict-link {
+    font-size: 1.25rem;
+    text-decoration: none;
+    opacity: 0.6;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.dict-link:hover {
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+/* ===== EXAMPLE HEADER (Label + Translate) ===== */
+.example-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-xs);
+}
+
+/* ===== TRANSLATE LINK ===== */
+.translate-link {
+    font-size: 1rem;
+    text-decoration: none;
+    opacity: 0.6;
+    transition: all 0.2s ease;
+}
+
+.translate-link:hover {
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+/* ===== RESPONSIVE FIXES ===== */
+/* Prevent horizontal scroll */
+.card-front,
+.card-back {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
+.card-container {
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+/* Word should wrap on small screens */
+.word {
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.word-row {
+    flex-wrap: wrap;
+}
+
+/* Example text should wrap */
+.example-text {
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+    .word-header {
+        padding-right: 45px;
+    }
+
+    .audio-top-right {
+        top: var(--space-md);
+        right: var(--space-md);
+    }
+
+    .audio-top-right .replay-button {
+        width: 32px;
+        height: 32px;
+    }
+
+    .audio-top-right .replay-button svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .dict-link {
+        font-size: 1rem;
+    }
+
+    .word-row {
+        gap: 0.75rem;
+    }
+}
