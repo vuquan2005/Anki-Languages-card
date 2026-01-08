@@ -12,7 +12,7 @@ The main vocabulary word to learn.
 ### Meaning
 Definition or translation of the word.
 
-**Example**: `a group of people who watch or listen to something`
+**Example**: `A group of people who watch or listen to something`
 
 ---
 

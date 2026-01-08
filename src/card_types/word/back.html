@@ -22,16 +22,8 @@
             </div>
         </div>
 
-        <!-- Image (if available) -->
-        {{#image}}
-        <div class="image-container">
-            {{image}}
-        </div>
-        {{/image}}
-
         <!-- Meaning (main definition) -->
         <div class="meaning-section">
-            <span class="section-label">Meaning:</span>
             <span class="meaning-text">{{Meaning}}</span>
         </div>
 
@@ -61,6 +53,14 @@
             <span class="notes-text">{{Notes}}</span>
         </div>
         {{/Notes}}
+
+        <!-- Image (if available) -->
+        {{#image}}
+        <div class="image-container">
+            {{image}}
+        </div>
+        {{/image}}
+
         <!-- Tags -->
         {{#Tags}}
         <div class="tags-row">

@@ -226,42 +226,36 @@
     font-weight: 300;
 }
 
-/* ===== SECTIONS ===== */
-.section-label {
-    font-size: var(--text-sm);
-    font-weight: 700;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-right: var(--space-sm);
-}
-
 /* ===== MEANING SECTION ===== */
 .meaning-section {
     margin: var(--space-lg) 0;
-    padding: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
     background: var(--bg-secondary);
+    border-left: 4px solid var(--accent-primary);
     border-radius: var(--radius-md);
 }
 
 .meaning-text {
     font-size: var(--text-lg);
+    font-weight: 500;
     color: var(--text-primary);
+    line-height: 1.5;
 }
 
 /* ===== EXAMPLE SECTION ===== */
 .example-section {
     margin: var(--space-md) 0;
-    padding: var(--space-md);
-    background: var(--bg-tertiary);
-    border-left: 3px solid var(--accent-primary);
-    border-radius: var(--radius-md);
+    padding: var(--space-sm) var(--space-md);
+    background: transparent;
+    border-left: 2px solid var(--border-color);
+    border-radius: 0;
 }
 
 .example-text {
-    font-size: var(--text-base);
-    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
     font-style: italic;
+    line-height: 1.6;
 }
 
 .highlight {
@@ -391,42 +385,69 @@
 
 .audio-top-right {
     position: absolute;
-    top: var(--space-lg);
-    right: var(--space-lg);
+    top: var(--space-md);
+    right: var(--space-md);
     z-index: 10;
+    line-height: 1;
 }
 
-.audio-top-right .replay-button {
-    display: flex;
+/* Hide default Anki audio player completely */
+.audio-top-right audio {
+    display: none !important;
+}
+
+/* Style the replay button as icon */
+.audio-top-right .replay-button,
+.audio-top-right a[href^="playsound:"],
+.audio-top-right [onclick*="pycmd"] {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    background: var(--accent-primary);
-    border-radius: var(--radius-full);
-    color: white;
+    width: 32px;
+    height: 32px;
+    background: var(--bg-tertiary, rgba(128, 128, 128, 0.15));
+    border: none;
+    border-radius: 8px;
+    color: var(--text-secondary, #666);
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(38, 166, 154, 0.3);
+    opacity: 0.75;
     transition: all 0.2s ease;
+    cursor: pointer;
+    font-size: 0;
+    /* Reset any inherited text */
+    text-indent: -9999px;
+    overflow: hidden;
 }
 
-.audio-top-right .replay-button:hover {
-    background: var(--accent-secondary);
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(38, 166, 154, 0.4);
+.audio-top-right .replay-button:hover,
+.audio-top-right a[href^="playsound:"]:hover,
+.audio-top-right [onclick*="pycmd"]:hover {
+    opacity: 1;
+    background: var(--accent-primary, #4a90d9);
+    color: #fff;
+    transform: scale(1.05);
 }
 
-.audio-top-right .replay-button svg {
-    width: 18px;
-    height: 18px;
+.audio-top-right .replay-button:active,
+.audio-top-right a[href^="playsound:"]:active,
+.audio-top-right [onclick*="pycmd"]:active {
+    transform: scale(0.95);
 }
 
-.audio-top-right .replay-button svg circle {
-    fill: transparent;
+/* Hide the SVG icon completely */
+.audio-top-right .replay-button svg,
+.audio-top-right svg {
+    display: none !important;
 }
 
-.audio-top-right .replay-button svg path {
-    fill: currentColor;
+/* Show speaker icon using pseudo-element */
+.audio-top-right .replay-button::before,
+.audio-top-right a[href^="playsound:"]::before,
+.audio-top-right [onclick*="pycmd"]::before {
+    content: "🔊";
+    font-size: 16px;
+    line-height: 1;
+    text-indent: 0;
 }
 
 /* ===== WORD ROW (Word + Dictionary Icon) ===== */
@@ -479,7 +500,6 @@
 /* Prevent horizontal scroll */
 .card-front,
 .card-back {
-    overflow-x: hidden;
     max-width: 100vw;
 }
 
@@ -508,22 +528,22 @@
 /* Mobile adjustments */
 @media (max-width: 480px) {
     .word-header {
-        padding-right: 45px;
+        padding-right: 40px;
     }
 
     .audio-top-right {
-        top: var(--space-md);
-        right: var(--space-md);
+        top: var(--space-sm, 8px);
+        right: var(--space-sm, 8px);
     }
 
     .audio-top-right .replay-button {
-        width: 32px;
-        height: 32px;
+        width: 26px;
+        height: 26px;
+        border-radius: 5px;
     }
 
-    .audio-top-right .replay-button svg {
-        width: 16px;
-        height: 16px;
+    .audio-top-right .replay-button::before {
+        font-size: 12px;
     }
 
     .dict-link {
