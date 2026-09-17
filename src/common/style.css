@@ -1,3 +1,6 @@
+@tailwind components;
+@tailwind utilities;
+
 /* ============================================
    ANKI LANGUAGE CARDS - COMMON STYLES
    Refined Typography & Colors

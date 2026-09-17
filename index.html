@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anki Languages Card - Dev Studio</title>
+  <style>
+    /* Dev Studio Toolbar & Container Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+      min-height: 100vh;
+    }
+
+    .studio-header {
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .studio-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .studio-brand span {
+      color: #2dd4bf;
+    }
+
+    .studio-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .studio-select, .studio-btn {
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #475569;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .studio-select:hover, .studio-btn:hover {
+      border-color: #2dd4bf;
+    }
+
+    .studio-btn.active-device {
+      background: #2dd4bf;
+      color: #0f172a;
+      font-weight: 600;
+      border-color: #2dd4bf;
+    }
+
+    .studio-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: rgba(45, 212, 191, 0.1);
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      color: #2dd4bf;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* Preview area */
+    #previewArea {
+      padding: 32px 16px;
+      transition: background-color 0.2s;
+      min-height: calc(100vh - 70px);
+      box-sizing: border-box;
+      background: #e2e8f0;
+    }
+
+    #previewArea.nightMode {
+      background: #111827;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 32px;
+      max-width: 1280px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    .preview-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .preview-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #475569;
+    }
+
+    #previewArea.nightMode .preview-label {
+      color: #94a3b8;
+    }
+
+    .card-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Mobile simulation mode */
+    #previewArea.preview-mobile .preview-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #previewArea.preview-mobile .card-wrapper {
+      max-width: 390px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid #64748b;
+    }
+  </style>
+</head>
+<body>
+  <!-- Studio Toolbar -->
+  <header class="studio-header">
+    <div class="studio-brand">
+      🎴 Anki Languages <span>Dev Studio</span>
+      <span class="studio-badge">● Live HMR</span>
+    </div>
+
+    <div class="studio-controls">
+      <label for="cardSelector" style="font-size: 0.8rem; color: #94a3b8;">Sample Card:</label>
+      <select id="cardSelector" class="studio-select"></select>
+
+      <button id="themeToggle" class="studio-btn">🌙 Dark Mode</button>
+
+      <div style="display: flex; gap: 4px;">
+        <button data-device="responsive" class="studio-btn active-device">💻 Desktop</button>
+        <button data-device="mobile" class="studio-btn">📱 Mobile (390px)</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Card Preview Arena -->
+  <main id="previewArea">
+    <div class="preview-grid">
+      <!-- Front Card Preview -->
+      <div class="preview-column">
+        <span class="preview-label">Front Side (Mặt Trước)</span>
+        <div class="card-wrapper card">
+          <div id="frontCardContainer" style="width: 100%;"></div>
+        </div>
+      </div>
+
+      <!-- Back Card Preview -->
+      <div class="preview-column">
+        <span class="preview-label">Back Side (Mặt Sau)</span>
+        <div class="card-wrapper card">
+          <div id="backCardContainer" style="width: 100%;"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/src/preview/preview.js"></script>
+</body>
+</html>

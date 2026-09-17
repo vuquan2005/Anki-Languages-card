@@ -15,8 +15,9 @@ function highlightWord(text, word) {
 /**
  * Apply highlight to example sentence element
  */
-function applyHighlight(exampleSelector, word) {
-    const exampleEl = document.querySelector(exampleSelector);
+function applyHighlight(exampleSelector, word, rootEl) {
+    const root = rootEl || document;
+    const exampleEl = root.querySelector(exampleSelector);
     if (exampleEl && word) {
         exampleEl.innerHTML = highlightWord(exampleEl.textContent, word.trim());
     }
@@ -26,8 +27,9 @@ function applyHighlight(exampleSelector, word) {
  * Normalize and apply color to PartOfSpeech element
  * Uses regex patterns to match POS variations with flexible whitespace handling
  */
-function applyPosColor() {
-    const el = document.querySelector('.pos');
+function applyPosColor(rootEl) {
+    const root = rootEl || document;
+    const el = root.querySelector('.pos');
     if (!el) return;
 
     const pos = el.textContent.trim();
@@ -67,8 +69,9 @@ function applyPosColor() {
 /**
  * Get the text content of a hidden field element
  */
-function getFieldValue(selector) {
-    const el = document.querySelector(selector);
+function getFieldValue(selector, rootEl) {
+    const root = rootEl || document;
+    const el = root.querySelector(selector);
     return el ? el.textContent.trim() : '';
 }
 
@@ -87,8 +90,9 @@ function onCardReady(callback) {
  * Normalize IPA by removing extra leading/trailing slashes
  * User input: "/həˈloʊ/" or "həˈloʊ" or "//həˈloʊ//" → display: "/həˈloʊ/"
  */
-function normalizeIPA(selector) {
-    var el = document.querySelector(selector);
+function normalizeIPA(selector, rootEl) {
+    const root = rootEl || document;
+    var el = root.querySelector(selector);
     if (!el) return;
 
     var text = el.textContent.trim();
@@ -98,4 +102,26 @@ function normalizeIPA(selector) {
     if (ipa) {
         el.textContent = '/' + ipa + '/';
     }
+}
+
+// Bind to window if in browser environment
+if (typeof window !== 'undefined') {
+    window.highlightWord = highlightWord;
+    window.applyHighlight = applyHighlight;
+    window.applyPosColor = applyPosColor;
+    window.getFieldValue = getFieldValue;
+    window.onCardReady = onCardReady;
+    window.normalizeIPA = normalizeIPA;
+}
+
+// Export for module environments
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        highlightWord,
+        applyHighlight,
+        applyPosColor,
+        getFieldValue,
+        onCardReady,
+        normalizeIPA
+    };
 }

@@ -1,0 +1,65 @@
+name: Build & Package Card Templates
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build & Package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build card templates
+        run: pnpm build
+
+      - name: Verify build outputs
+        run: |
+          test -f dist/01_word/front.html || (echo "Missing front.html" && exit 1)
+          test -f dist/01_word/back.html || (echo "Missing back.html" && exit 1)
+          test -f dist/01_word/style.css || (echo "Missing style.css" && exit 1)
+          echo "✅ All templates built successfully!"
+
+      - name: Upload compiled templates as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: anki-card-templates
+          path: dist/
+          retention-days: 30
+
+      - name: Create release asset (on tags)
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          cd dist && zip -r ../anki-card-templates.zip . && cd ..
+
+      - name: Attach to GitHub Release (on tags)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: anki-card-templates.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
