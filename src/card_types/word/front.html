@@ -2,19 +2,19 @@
 <div class="card-front">
     <div class="card-container">
 
-        <!-- Audio Button (Top Right) -->
-        {{#Audio}}
-        <div class="audio-top-right">
-            {{Audio}}
-        </div>
-        {{/Audio}}
-
-        <!-- Header: Word + Dictionary Link + IPA + Part of Speech -->
+        <!-- Header: Word + Audio + Dictionary Link + IPA + Part of Speech -->
         <div class="word-header">
             <div class="word-row">
                 <span class="word">{{Word}}</span>
-                <a href="https://dictionary.cambridge.org/dictionary/english/{{Word}}" class="dict-link"
-                    title="Open Cambridge Dictionary">📖</a>
+                <div class="word-actions">
+                    {{#Audio}}
+                    <span class="audio-button-wrap" title="Pronounce">
+                        {{Audio}}
+                    </span>
+                    {{/Audio}}
+                    <a href="https://dictionary.cambridge.org/dictionary/english/{{Word}}" class="dict-link"
+                        title="Open Cambridge Dictionary" target="_blank">📖</a>
+                </div>
             </div>
             <div class="word-meta">
                 {{#IPA}}<span class="phonetic" id="ipaFront">{{IPA}}</span>{{/IPA}}
@@ -29,14 +29,12 @@
         </div>
         {{/image}}
 
-        <!-- Blank space for meaning (user will think of it) -->
-        <div class="meaning-placeholder">
-            <span class="placeholder-text">?</span>
-        </div>
-
-        <!-- Example Sentence (if available) -->
+        <!-- Example Sentence (Contextual Clue) -->
         {{#ExampleSentence}}
-        <div class="example-section">
+        <div class="example-section example-front">
+            <div class="example-header">
+                <span class="section-label">Example Clue:</span>
+            </div>
             <span class="example-text" id="exampleFront">{{ExampleSentence}}</span>
         </div>
         {{/ExampleSentence}}

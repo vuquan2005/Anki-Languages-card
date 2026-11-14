@@ -2,19 +2,19 @@
 <div class="card-back">
     <div class="card-container" id="cardContainer">
 
-        <!-- Audio Button (Top Right) -->
-        {{#Audio}}
-        <div class="audio-top-right">
-            {{Audio}}
-        </div>
-        {{/Audio}}
-
-        <!-- Header: Word + Dictionary Link + IPA + Part of Speech -->
+        <!-- Header: Word + Audio + Dictionary Link + IPA + Part of Speech -->
         <div class="word-header">
             <div class="word-row">
                 <span class="word">{{Word}}</span>
-                <a href="https://dictionary.cambridge.org/dictionary/english/{{Word}}" class="dict-link"
-                    title="Open Cambridge Dictionary">📖</a>
+                <div class="word-actions">
+                    {{#Audio}}
+                    <span class="audio-button-wrap" title="Pronounce">
+                        {{Audio}}
+                    </span>
+                    {{/Audio}}
+                    <a href="https://dictionary.cambridge.org/dictionary/english/{{Word}}" class="dict-link"
+                        title="Open Cambridge Dictionary" target="_blank">📖</a>
+                </div>
             </div>
             <div class="word-meta">
                 {{#IPA}}<span class="phonetic" id="ipaBack">{{IPA}}</span>{{/IPA}}
@@ -22,10 +22,18 @@
             </div>
         </div>
 
-        <!-- Meaning (main definition) -->
+        <!-- Meaning (Main Definition) -->
         <div class="meaning-section">
-            <span class="meaning-text">{{Meaning}}</span>
+            <span class="meaning-label">Definition</span>
+            <div class="meaning-text">{{Meaning}}</div>
         </div>
+
+        <!-- Image (Synchronized position right below Meaning) -->
+        {{#image}}
+        <div class="image-container">
+            {{image}}
+        </div>
+        {{/image}}
 
         <!-- Example Sentence -->
         {{#ExampleSentence}}
@@ -33,7 +41,7 @@
             <div class="example-header">
                 <span class="section-label">Example:</span>
                 <a href="https://translate.google.com/?sl=en&tl=vi&text={{ExampleSentence}}" class="translate-link"
-                    title="Google Translate">🌐</a>
+                    title="Google Translate" target="_blank">🌐 Translate</a>
             </div>
             <span class="example-text" id="exampleSentence">{{ExampleSentence}}</span>
         </div>
@@ -41,25 +49,19 @@
 
         <!-- Collocations -->
         {{#collocations pattern}}
-        <div class="section-row">
-            <span class="section-label">Collocation:</span>
-            <span class="section-value">{{collocations pattern}}</span>
+        <div class="collocations-section">
+            <span class="section-label">Collocations:</span>
+            <div class="collocations-list" id="collocationsContainer">{{collocations pattern}}</div>
         </div>
         {{/collocations pattern}}
 
         <!-- Notes -->
         {{#Notes}}
         <div class="notes-section">
-            <span class="notes-text">{{Notes}}</span>
+            <span class="notes-label">Note:</span>
+            <div class="notes-text">{{Notes}}</div>
         </div>
         {{/Notes}}
-
-        <!-- Image (if available) -->
-        {{#image}}
-        <div class="image-container">
-            {{image}}
-        </div>
-        {{/image}}
 
         <!-- Tags -->
         {{#Tags}}

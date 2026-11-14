@@ -45,6 +45,21 @@ function renderCurrentCards() {
       tagsContainer.innerHTML = tags.map((t) => `<span class="tag">${t}</span>`).join('');
     }
   }
+
+  // Collocation chips logic
+  const collocContainer = backContainer.querySelector('#collocationsContainer');
+  if (collocContainer) {
+    const collocText = collocContainer.textContent.trim();
+    if (collocText) {
+      const delimiter = collocText.includes('|') ? '|' : (collocText.includes(';') ? ';' : null);
+      if (delimiter) {
+        const items = collocText.split(delimiter).map((s) => s.trim()).filter(Boolean);
+        collocContainer.innerHTML = items.map((item) => `<span class="collocation-chip">${item}</span>`).join('');
+      } else {
+        collocContainer.innerHTML = `<span class="collocation-chip">${collocText}</span>`;
+      }
+    }
+  }
 }
 
 function setupControls() {

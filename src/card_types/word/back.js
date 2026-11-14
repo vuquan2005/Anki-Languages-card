@@ -29,4 +29,25 @@ onCardReady(function () {
             }).join('');
         }
     }
+
+    // 5. Parse and display collocations as individual chips
+    var collocContainer = document.getElementById('collocationsContainer');
+    if (collocContainer) {
+        var collocText = collocContainer.textContent.trim();
+        if (collocText) {
+            var delimiter = collocText.indexOf('|') !== -1 ? '|' : (collocText.indexOf(';') !== -1 ? ';' : null);
+            if (delimiter) {
+                var items = collocText.split(delimiter).map(function (item) {
+                    return item.trim();
+                }).filter(function (item) {
+                    return item.length > 0;
+                });
+                collocContainer.innerHTML = items.map(function (item) {
+                    return '<span class="collocation-chip">' + item + '</span>';
+                }).join('');
+            } else {
+                collocContainer.innerHTML = '<span class="collocation-chip">' + collocText + '</span>';
+            }
+        }
+    }
 });
